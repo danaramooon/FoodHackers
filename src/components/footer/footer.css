@@ -1,0 +1,42 @@
+.body__footer {
+	padding: 40px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.footer--style {
+	background-color: #EFEFEF;
+	color: #A2A2A2;
+}
+
+.footer__footer-element {
+	width: 200px;
+	max-width: 30%;
+}
+
+.footer-element__title {
+	text-align: center;
+	font-weight: 700;
+}
+
+
+.footer-element__content--social {
+	display: flex;
+	justify-content: space-around;
+}
+
+.social-link {
+	text-decoration: none;
+	color: #A2A2A2;
+}
+
+.social-link:hover {
+	color: #30C2FF;
+}
+.select_products_title{
+	text-align: center;
+	font-weight: 350;
+}
+.grey_line{
+	border-top: 1px solid #C0C0C0;
+}

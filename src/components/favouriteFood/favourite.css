@@ -1,0 +1,23 @@
+.food_block_grey{
+	background-color: #F5F5F5;
+	margin: 25px 0;
+}
+.name_food{
+    
+	font-weight: 300;
+	text-align: center;
+}
+.ingredients{
+	font-size: 12px;
+}
+
+.food_image{
+	width: 15%;
+}
+.star{
+    width: 3%;
+    margin-right: 100%;
+  }
+.line{
+   
+}

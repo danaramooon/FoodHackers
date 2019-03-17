@@ -1,25 +1,29 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import Header from './components/header/Header'
+import Footer from './components/footer/Footer'
+import FoodBlock from './components/foodContainer/foodblock'
+import Favourite from './components/favouriteFood/favourite'
 import './App.css';
+import CheckBox from './components/checkbox/checkbox';
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <Header/>
+        <Router>
+          <div>  
+            <Route path="/favourite/" component={Favourite} />
+            <div class = "container">
+              <Route path="/recept/" component={FoodBlock} />
+            </div>
+            <Route path="/checkbox/" component={CheckBox}/>
+          </div>
+        </Router>
+        <Footer/>
       </div>
     );
   }
