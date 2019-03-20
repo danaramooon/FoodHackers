@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import logo from '../../images/logo.png'
+import logo from '../../images/logo.png';
+import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
 
 import './header.css';
 
@@ -36,26 +36,26 @@ function Navbar() {
     
     render() {
       return (
-        <header className="header">
-          <div className="header-begin header-begin--style header__header-begin">
-            <div className="authorization header-begin__authorization">
-              <a href="" className="authorization-link authorization-link--style">Регистрация</a>
-              <a href="" className="authorization-link authorization-link--style">Войти</a>
+          <header className="header">
+            <div className="header-begin header-begin--style header__header-begin">
+              <div className="authorization header-begin__authorization">
+                <Link to="/registration/" className="authorization-link authorization-link--style">Регистрация</Link>
+                <Link to="/authorization/" className="authorization-link authorization-link--style">Войти</Link>
+              </div>
             </div>
-          </div>
-          <div className="header-end header__header-end">
-            <div className="logo-wrapper">    
-			      	<img src={logo} alt="" class = "logo logo-wrapper__logo logo--style"/>
+            <div className="header-end header__header-end">
+              <div className="logo-wrapper">    
+                <img src={logo} alt="" class = "logo logo-wrapper__logo logo--style"/>
+              </div>
+              <nav className = "header-nav header-end__header-nav">
+
+                <NavLink to ="/recept/" className="header-nav__link header-nav__link--style" activeClassName = "header-nav__link--selected">Рецепты</NavLink>
+                <NavLink to ="/forum/" className="header-nav__link header-nav__link--style" activeClassName = "header-nav__link--selected">Форум</NavLink>
+                <NavLink to ="/favourite/" className="header-nav__link header-nav__link--style" activeClassName = "header-nav__link--selected">Избранные</NavLink>
+                <NavLink to ="/checkbox/" className="header-nav__link header-nav__link--style" activeClassName = "header-nav__link--selected">Подбери свой рецепт</NavLink>
+              </nav>
             </div>
-            <nav className = "header-nav header-end__header-nav">
-              <a href="/recept/" className="header-nav__link header-nav__link--style header-nav__link--selected">Рецепты</a>
-              <a href="" className="header-nav__link header-nav__link--style">Форум</a>
-              <a href="" className="header-nav__link header-nav__link--style">Авторы</a>
-              <a href="/favourite/" className="header-nav__link header-nav__link--style">Избранные</a>
-              <a href="/checkbox/" className="header-nav__link header-nav__link--style">Подбери свой рецепт</a>
-            </nav>
-          </div>
-        </header>
+          </header>
       );
     }
   }
