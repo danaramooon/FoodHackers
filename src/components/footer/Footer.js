@@ -27,8 +27,8 @@ class Footer extends Component {
                             Соц сети
                         </h4>
                         <div className = "footer-element__content footer-element__content--social">
-                            <a href="https://vk.com/id199630092" className = "social-link fa fa-lg fa-vk"></a>
-                            <a href="https://www.instagram.com/yess_zhan/?hl=en" className = "social-link fa fa-lg fa-instagram"></a>
+                            <a href="https://vk.com/id199630092" className = "social-link fab fa-lg fa-vk"></a>
+                            <a href="https://www.instagram.com/yess_zhan/?hl=en" className = "social-link fab fa-lg fa-instagram"></a>
                         </div>
                     </div>
             </footer>
