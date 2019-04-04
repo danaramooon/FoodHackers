@@ -5,80 +5,54 @@ import lagman from '../../images/lagman.jpg'
 import shashlyk from '../../images/шашлык.jpg'
 import plov from '../../images/plov.jpg'
 import './foodblock.css';
+import { connect } from 'react-redux'; 
+import * as receiptActions from '../../actions/receiptActions';
 
 class FoodBlock extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+
+		}
+	}
+	componentDidMount() {
+		console.log("wefwef");
+		this.props.getReceipts();
+	}
+
     render() {
         return (
 			<div class = "container">
-			<SideBar/>
-            <div class = "food_block_container">
-
-				<div class = "food_block">
-					<div class="row">
-						<img src={shashlyk} class = "food_img "/>
-						<div class="text">
-							<h3 class="name_food">Шашлык</h3>
-							<p>Ad dolore dignissimos asperiores dicta facere optio quod commodi nam tempore recusandae. Rerum sed nulla eum vero expedita ex delectus voluptates rem at neque quos facere sequi unde optio aliquam.Tenetur quod quidem in voluptatem corporis dolorum dicta sit pariatur porro quaerat autem ipsam odit quam beatae tempora quibusdam illum! Modi velit odio nam nulla unde amet odit pariatur at </p> 
-							<p class="ingredients"> 
-								<b>Состав:</b> 
-								баранина, баклажан, масло растительное, перец чёрный молотый, соль, зелень, овощи
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class = "food_block">
-					<div class="row">
-						<img src={lagman} class = "food_img "/>
-						<div class="text">
-							<h3 class="name_food">Лагман</h3>
-							<p>Ad dolore dignissimos asperiores dicta facere optio quod commodi nam tempore recusandae.Ad dolore dignissimos asperiores dicta facere optio quod commodi nam tempore recusandae.Ad dolore dignissimos asperiores dicta facere optio quod commodi nam tempore.Modi velit odio nam nulla unde amet odit pariatur at </p> 
-							<p class="ingredients"> 
-								<b>Состав:</b> 
-								говядина, масло растительное, картофель, лук репчатый, чеснок, перец болгарский, морковь, редька, томат-пюре, помидоры, специи, соль, бульон, мука пшеничная, яйца.	</p>
-						</div>
-					</div>
-				</div>
-				<div class = "food_block">
-					<div class="row">
-						<img src={plov} class = "food_img "/>
-						<div class="text">
-							<h3 class="name_food">Плов</h3>
-							<p>Ad dolore dignissimos asperiores dicta facere optio quod commodi nam tempore recusandae. Rerum sed nulla eum vero expedita ex delectus voluptates rem at neque quos facere sequi unde optio aliquam.Tenetur quod quidem in voluptatem corporis dolorum dicta sit pariatur porro quaerat autem ipsam odit quam beatae tempora quibusdam illum! Modi velit odio nam nulla unde amet odit pariatur at </p> 
-							<p class="ingredients"> 
-								<b>Состав:</b> 
-								говядина, баранина, рис, лук репчатый, морковь, чеснок, масло растительное						</p>
-						</div>
-					</div>
-				</div>
-			
-				<div class = "food_block">
-						<div class="row">
-							<img src={shashlyk} class = "food_img "/>
-							<div class="text">
-								<h3 class="name_food">Шашлык</h3>
-								<p>Ad dolore dignissimos asperiores dicta facere optio quod commodi nam tempore recusandae. Rerum sed nulla eum vero expedita ex delectus voluptates rem at neque quos facere sequi unde optio aliquam.Tenetur quod quidem in voluptatem corporis dolorum dicta sit pariatur porro quaerat autem ipsam odit quam beatae tempora quibusdam illum! Modi velit odio nam nulla unde amet odit pariatur at </p> 
-								<p class="ingredients"> 
-									<b>Состав:</b> 
-									баранина, баклажан, масло растительное, перец чёрный молотый, соль, зелень, овощи						</p>
+				<SideBar/>
+				<div class = "food_block_container">
+					{ this.props.receipts.map(receipt=>
+							<div class = "food_block">
+								<div class="row">
+									{/* <img src={shashlyk} class = "food_img "/> */}
+									<div class="text">
+										<h3 class="name_food">{receipt.title}</h3>
+										<p>{receipt.body}</p> 
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
-				<div class = "food_block">
-						<div class="row">
-							<img src={plov} class = "food_img "/>
-							<div class="text">
-								<h3 class="name_food">Плов</h3>
-								<p>Ad dolore dignissimos asperiores dicta facere optio quod commodi nam tempore recusandae. Rerum sed nulla eum vero expedita ex delectus voluptates rem at neque quos facere sequi unde optio aliquam.Tenetur quod quidem in voluptatem corporis dolorum dicta sit pariatur porro quaerat autem ipsam odit quam beatae tempora quibusdam illum! Modi velit odio nam nulla unde amet odit pariatur at </p> 
-								<p class="ingredients"> 
-									<b>Состав:</b> 
-									говядина, баранина, рис, лук репчатый, морковь, чеснок, масло растительное
-								</p>
-						</div>
-					</div>
+						)
+					}	
 				</div>
-			</div>
 			</div>
         );
     }
 }
-export default FoodBlock;
+const mapStateToProps = (state) => ({
+	receipts: state.receipt.receipts,
+	firstReceipt: state.receipt.firstReceipt
+})
+  
+const mapDispatchToProps = {
+	getReceipts: receiptActions.getReceipts,
+	createReceipt: receiptActions.createReceipt
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(FoodBlock);

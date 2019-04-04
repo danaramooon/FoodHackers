@@ -12,25 +12,26 @@ import Registration from './components/registration/registration.js';
 import Forum from './components/forum/forum.js';
 
 
+
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div>
-          <Header/>
-            <div>  
-              <Route path="/favourite/" component={Favourite} />
-              <div class = "container">
-                <Route path="/recept/" component={FoodBlock} />
+        <Router>
+          <div>
+            <Header/>
+              <div>  
+                <Route path="/favourite/" component={Favourite} />
+                <div class = "container">
+                  <Route path="/recept/" component={FoodBlock} />
+                </div>
+                <Route path="/checkbox/" component={CheckBox}/>
+                <Route path = "/authorization/" component = {Authorization}/>
+                <Route path = "/registration/" component = {Registration}/>
+                <Route path = "/forum/" component = {Forum}/>
               </div>
-              <Route path="/checkbox/" component={CheckBox}/>
-              <Route path = "/authorization/" component = {Authorization}/>
-              <Route path = "/registration/" component = {Registration}/>
-              <Route path = "/forum/" component = {Forum}/>
-            </div>
-          <Footer/>
-        </div>
-      </Router>
+            <Footer/>
+          </div>
+        </Router>
     );
   }
 }
