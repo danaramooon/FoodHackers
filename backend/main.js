@@ -24,14 +24,16 @@ const Answer = mongoose.model('Answer',{
 const Comment = mongoose.model('Comment',{
     dish:String,
     content:String,
-    author:String
+    author:String,
+    created_at: {type: Date, default: Date.now}
 });
 const Dish = mongoose.model('Dish',{
     receipt:[String],
     name:String,
     description:String,
     image:String,
-    author:String
+    author:String,
+    
 });
 const Food = mongoose.model('Food', {
     name:String
@@ -117,20 +119,27 @@ app.delete('/foods/:id',
         return res.json({status: 'ok'})
     })
 });
-
-
-
-
-//Answers
-async function getUser(author) {
-  return await User.findOne({ _id:author}, function (err, person) {
+//Dishes
+//get user by id
+ function getUser(author) {
+  return User.findOne({ _id:author}, function (err, person) {
     if (err) return handleError(err);
-   // console.log(person);
-    return person
+ 
+    return person._id,person.username
 });
 }
+//get dish by id
+function getDish(id) {
+  return Dish.findOne({ _id:id}, function (err, dish) {
+    if (err) return handleError(err);
+ 
+    return dish
+});
+}
+
+
 app.get('/dishs', (req, res) => {
-    Dish.find({}, (err, dishs) => {
+     Dish.find({}, async (err, dishs) => {
         
         if (err)
             return res.json({status: 'error', data: err});
@@ -138,17 +147,13 @@ app.get('/dishs', (req, res) => {
         
         for (var i = 0; i < dishs.length; i++) {
             console.log(getUser(dishs[i].author));
-            dishs[i].author=getUser(dishs[i].author);
+            dishs[i].author= await getUser(dishs[i].author);
         }
         
 
         return res.json({data:dishs})
     })
 });
-
-
-
-
 
 app.post('/dishs',
     passport.authenticate('basic', { session: false }),
@@ -199,8 +204,50 @@ app.delete('/dishs/:id',
     })
 });
 
+app.get('/dishs/:id', (req, res) => {
+    let id = req.params.id;
+         Dish.findOne({_id:id}, async (err, dish) => {
+           
+       
+        let author1 = await getUser(dish.author);
+        dish.author=author1;
+       
+         
+        return res.json({data:dish});
 
+        
+    })
+});
+//Comments
+app.get('/dishs/:id/comments', (req, res) => {
+    let id = req.params.id;
+    console.log(id);     
+Comment.find({ dish:id}, function (err, comments) {
+    if (err) return handleError(err);
+    console.log(comments);
+    return  res.json(comments)
+        
+    })
+});
 
+app.post('/dishs/:id/comments',
+    passport.authenticate('basic', { session: false }),
+   async (req, res) => {
+    let content = req.body.content;
+    console.log("content is: "+content);
+    let author = req.user._id;
+    let dish =await getDish(req.params.id);
+        console.log("dish is: "+dish)
+    if (!content )
+        return res.json({status: 'error', data: 'Invalid params'});
+    
+          
+    Comment.create({content:content,dish:req.params.id,author:author}, (err, comment) => {
+        
+
+        return res.json({content:comment.content,dish:dish,author:req.user,created_at:comment.created_at})
+    })
+});
 
 app.listen(8000, () => {
     console.log("Started");
