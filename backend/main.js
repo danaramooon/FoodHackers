@@ -19,7 +19,8 @@ passport.use(new BasicStrategy((username, password, done) => {
 const Answer = mongoose.model('Answer',{
     content:String,
     comment:String,
-    author:String
+    author:String,
+    created_at: {type: Date, default: Date.now}
 });
 const Comment = mongoose.model('Comment',{
     dish:String,
@@ -120,6 +121,8 @@ app.delete('/foods/:id',
     })
 });
 //Dishes
+
+
 //get user by id
  function getUser(author) {
   return User.findOne({ _id:author}, function (err, person) {
@@ -128,6 +131,7 @@ app.delete('/foods/:id',
     return person._id,person.username
 });
 }
+
 //get dish by id
 function getDish(id) {
   return Dish.findOne({ _id:id}, function (err, dish) {
@@ -224,7 +228,7 @@ app.get('/dishs/:id/comments', (req, res) => {
     console.log(id);     
 Comment.find({ dish:id}, function (err, comments) {
     if (err) return handleError(err);
-    console.log(comments);
+    
     return  res.json(comments)
         
     })
@@ -235,7 +239,7 @@ app.post('/dishs/:id/comments',
    async (req, res) => {
     let content = req.body.content;
     console.log("content is: "+content);
-    let author = req.user._id;
+    let author = req.user.username;
     let dish =await getDish(req.params.id);
         console.log("dish is: "+dish)
     if (!content )
@@ -248,6 +252,69 @@ app.post('/dishs/:id/comments',
         return res.json({content:comment.content,dish:dish,author:req.user,created_at:comment.created_at})
     })
 });
+app.delete('/comments/:id',
+    passport.authenticate('basic', { session: false }),
+    (req, res) => {
+    
+    let id = req.params.id;
+
+    
+    
+    Comment.deleteOne({_id: id}, (err) => {
+        if (err)
+            return res.json({status: 'error', data: err});
+
+        return res.json({status: 'ok'})
+    })
+});
+
+
+//answers
+
+app.get('/comments/:id/answers', (req, res) => {
+    let id = req.params.id;
+    console.log(id);     
+Answer.find({ comment:id}, function (err, answers) {
+    if (err) return handleError(err);
+    
+    return  res.json(answers)
+        
+    })
+});
+app.post('/comments/:id/answers',
+    passport.authenticate('basic', { session: false }),
+   async (req, res) => {
+    let content = req.body.content;
+    
+    let author = req.user.username;
+    
+        if (!content )
+        return res.json({status: 'error', data: 'Invalid params'});
+    
+          
+    Answer.create({content:content,comment:req.params.id,author:author}, (err, answer) => {
+        
+
+        return res.json({content:answer.content,comment:answer.comment,author:answer.author,created_at:answer.created_at})
+    })
+});
+app.delete('answers/:id',
+    passport.authenticate('basic', { session: false }),
+    (req, res) => {
+    
+    let id = req.params.id;
+
+    
+    
+    Answer.deleteOne({_id: id}, (err) => {
+        if (err)
+            return res.json({status: 'error', data: err});
+
+        return res.json({status: 'ok'})
+    })
+});
+
+
 
 app.listen(8000, () => {
     console.log("Started");
