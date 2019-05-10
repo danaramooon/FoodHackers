@@ -22,16 +22,16 @@ class FoodBlock extends Component {
 
     render() {
         return (
-			<div class = "container">
+			<div className = "container">
 				<SideBar/>
-				<div class = "food_block_container">
+				<div className = "food_block_container">
 					{ this.props.receipts.map(receipt=>
-							<div class = "food_block">
-								<div class="row">
-									{/* <img src={shashlyk} class = "food_img "/> */}
-									<div class="text">
-										<h3 class="name_food">{receipt.title}</h3>
-										<p>{receipt.body}</p> 
+							<div className = "food_block">
+								<div className="row">
+									<img src={shashlyk} className = "food_img "/>
+									<div className="text">
+										<h3 className="name_food">{receipt.name}</h3>
+										<p>{receipt.name}</p> 
 									</div>
 								</div>
 							</div>

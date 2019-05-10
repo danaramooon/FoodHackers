@@ -4,7 +4,7 @@ import './sidebar.css';
 class SideBar extends Component {
     render() {
         return (
-            <div class="sidenav_">
+            <div className="sidenav_">
                 <span >Категории блюд</span>
                 <a href="#">Выпечка</a>
                 <a href="#">Гарниры</a>

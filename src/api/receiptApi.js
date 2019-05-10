@@ -1,6 +1,6 @@
 export const getReceipts = () => (
   fetch(
-    'https://jsonplaceholder.typicode.com/posts',
+    'http://localhost:8000/foods',
     {
       method: 'GET',
     }

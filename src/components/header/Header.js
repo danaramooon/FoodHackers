@@ -45,7 +45,7 @@ function Navbar() {
             </div>
             <div className="header-end header__header-end">
               <div className="logo-wrapper">    
-                <img src={logo} alt="" class = "logo logo-wrapper__logo logo--style"/>
+                <img src={logo} alt="" className = "logo logo-wrapper__logo logo--style"/>
               </div>
               <nav className = "header-nav header-end__header-nav">
 

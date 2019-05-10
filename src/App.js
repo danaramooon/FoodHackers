@@ -21,7 +21,7 @@ class App extends Component {
             <Header/>
               <div>  
                 <Route path="/favourite/" component={Favourite} />
-                <div class = "container">
+                <div className = "container">
                   <Route path="/recept/" component={FoodBlock} />
                 </div>
                 <Route path="/checkbox/" component={CheckBox}/>

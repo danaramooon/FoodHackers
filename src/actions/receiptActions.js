@@ -16,7 +16,7 @@ export const getReceipts = () => (dispatch, getState) => {
           .then(
             value => {
               const receipts = JSON.parse(value);
-              console.log("hui");
+              console.log("omgcsd csdlc skd clk slkdncnsdlcn");
               console.log(receipts[0]);
               dispatch({
                 type: actionTypes.ACTION_GET_RECEIPTS_SUCCESS,

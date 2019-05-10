@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+var cors = require('cors');
 
+app.use(cors());
 app.use(bodyParser.json());
 
 const passport = require('passport');
@@ -45,7 +47,7 @@ const User = mongoose.model('User', {
     password: String
 });
 
-mongoose.connect('mongodb://localhost:27017/nodekb', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/foodfc', {useNewUrlParser: true});
 
 
 //АВТОРИЗАЦИЯ
@@ -60,11 +62,11 @@ app.get('/users/me',
         if (err)
             return res.json({status: 'error', data: err});
 
-        return res.json({status: 'ok', data: user})
+        return res.json(user)
     })
 });
 
-app.post('/users/register',
+app.post('/register',
     (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
@@ -83,12 +85,12 @@ app.post('/users/register',
 // FOODS
 app.get('/foods', (req, res) => {
 	
-    Food.find({}, { _id: 1,name:1 },{sort: {name: 1}} ,(err, foods) => {
+    Food.find({},(err, foods) => {
         
         if (err)
             return res.json({status: 'error', data: err});
         
-        return res.json({status: 'ok', data: foods});
+        return res.json(foods);
     })
 }); 
 app.post('/foods',
@@ -102,7 +104,7 @@ app.post('/foods',
         if (err)
             return res.json({status: 'error', data: err});
         
-        return res.json({status: 'ok', data: food})
+        return res.json(food)
     })
 });
 app.delete('/foods/:id',
@@ -143,6 +145,7 @@ function getDish(id) {
 
 
 app.get('/dishs', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000'),
      Dish.find({}, async (err, dishs) => {
         
         if (err)
@@ -155,7 +158,7 @@ app.get('/dishs', (req, res) => {
         }
         
 
-        return res.json({data:dishs})
+        return res.json(dishs)
     })
 });
 
@@ -217,7 +220,7 @@ app.get('/dishs/:id', (req, res) => {
         dish.author=author1;
        
          
-        return res.json({data:dish});
+        return res.json(dish);
 
         
     })
